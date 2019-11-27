@@ -1,0 +1,6 @@
+arm_64bit=1
+enable_uart=1
+core_freq=250
+enable_gic=1
+armstub=RPI_EFI.fd
+disable_commandline_tags=1

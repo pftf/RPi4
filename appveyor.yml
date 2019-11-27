@@ -1,0 +1,44 @@
+# Copyright (c) 2019, Pete Batard <pete@akeo.ie>
+# SPDX-License-Identifier: BSD-3-Clause
+
+image: Ubuntu1804
+
+skip_non_tags: true
+
+install:
+  sh: |-
+      sudo apt-get update -qq
+      sudo -E apt-get install -y acpica-tools gcc-aarch64-linux-gnu python3-distutils uuid-dev
+      git submodule update --init --recursive
+
+before_build:
+  ps: |-
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-4-b.dtb
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/fixup4.dat
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/start4.elf
+
+build_script:
+  sh: ./build_firmware.sh
+
+after_build:
+  sh: |-
+      7z a RPI4_UEFI_Firmware_$APPVEYOR_REPO_TAG_NAME.zip $APPVEYOR_BUILD_FOLDER/Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd $APPVEYOR_BUILD_FOLDER/bcm2711-rpi-4-b.dtb $APPVEYOR_BUILD_FOLDER/config.txt $APPVEYOR_BUILD_FOLDER/fixup4.dat $APPVEYOR_BUILD_FOLDER/start4.elf $APPVEYOR_BUILD_FOLDER/Readme.md
+      sha256sum RPI4_UEFI_Firmware_$APPVEYOR_REPO_TAG_NAME.zip
+
+artifacts:
+  - path: 'Build/RPi4/DEBUG_GCC5/FV/RPI_EFI.fd'
+    name: RPi4 UEFI Firmware (DEBUG)
+  - path: 'Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd'
+    name: RPi4 UEFI Firmware (RELEASE)
+  - path: '*.zip'
+    name: Raspberry Pi 4 UEFI Firmware
+
+deploy:
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  description: Raspberry Pi 4 UEFI Firmware $(APPVEYOR_REPO_TAG_NAME)
+  provider: GitHub
+  auth_token:
+    secure: w5YuQOim+G+U7FxxrL0BH6t0trCWKCs9DMZlF4xqF2XGC6SymzwaJrPWrKeeJHPK
+  artifact: /.*\.zip/
+  draft: false
+  prerelease: false

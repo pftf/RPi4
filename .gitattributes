@@ -1,0 +1,4 @@
+*.sh            eol=lf
+*.txt           eol=crlf
+.gitattributes  export-ignore
+.gitignore      export-ignore
