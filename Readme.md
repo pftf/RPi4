@@ -37,6 +37,21 @@ to launch the UEFI Shell, or, provided you also have copied an UEFI bootloader i
 `efi/boot/bootaa64.efi`, you can let the UEFI system run that (which it should do by
 default if no action is taken).
 
+# Notes
+
+The firmware provided in the zip archive is the `RELEASE` version but you can also find
+`DEBUG` builds of the firmware in the 
+[AppVeyor artifacts](https://ci.appveyor.com/project/pbatard/RPi4/build/artifacts).
+
+The default baudrate for serial I/O is 115200 bauds.
+
+Note that you __MUST__ have both a `bcm2711-rpi-4-b.dtb` at the root of your SD card
+and `core_freq=250` in your `config.txt` for the baudrate to be set properly.
+
 # License
 
+The firmware (`RPI_EFI.fd`) is licensed under the current EDK2 license, which is
 [BSD-3-Clause](https://github.com/ARM-software/arm-trusted-firmware/blob/master/license.rst).
+
+The other files from the zip archives are licensed under the terms described in the
+[Raspberry Pi boot files README](https://github.com/raspberrypi/firmware/blob/master/README.md).
