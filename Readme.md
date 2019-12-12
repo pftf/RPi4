@@ -8,8 +8,11 @@ Raspberry Pi 4 UEFI Firmware Images
 
 This repository contains __EARLY EXPERIMENTAL__ builds of the EDK2 Raspberry Pi 4 UEFI firmware.
 
-Please do not expect to boot much of anything at this stage, as this firmware, which has yet to
-be integrated to the EDK2, is very much in early development stage.
+Please do not expect to boot much of anything at this stage (and especially __not__ Windows), as
+this firmware, which has yet to be integrated to the EDK2, is very much in early development stage.
+
+You may however find that you can boot and install Linux from USB (tested with Debian 10.2 for
+ARM64, with the caveat that you NIC and SD card will be unavailable due to lack of drivers).
 
 # Installation
 
@@ -33,9 +36,9 @@ data from the SD/USB partition) and then the Raspberry Pi black and white logo o
 UEFI firmware is ready.
 
 At this stage, you can press <kbd>Esc</kbd> to enter the firmware setup, <kbd>F1</kbd>
-to launch the UEFI Shell, or, provided you also have copied an UEFI bootloader in
-`efi/boot/bootaa64.efi`, you can let the UEFI system run that (which it should do by
-default if no action is taken).
+to launch the UEFI Shell, or, provided you also have an UEFI bootloader on the SD 
+card or on a USB drive in `efi/boot/bootaa64.efi`, you can let the UEFI system run that
+(which will be the default if no action is taken).
 
 # Notes
 
@@ -43,10 +46,9 @@ The firmware provided in the zip archive is the `RELEASE` version but you can al
 `DEBUG` builds of the firmware in the 
 [AppVeyor artifacts](https://ci.appveyor.com/project/pbatard/RPi4/build/artifacts).
 
-The default baudrate for serial I/O is 115200 bauds.
-
-Note that you __MUST__ have both a `bcm2711-rpi-4-b.dtb` at the root of your SD card
-and `core_freq=250` in your `config.txt` for the baudrate to be set properly.
+Note that the RELEASE fimware from the archive uses PL011 for the UART, meaning that
+it uses mini UART for Bluetooth (hence the use of the `minuartbt` overlay). The 
+default baudrate for serial I/O is 115200.
 
 # License
 
