@@ -31,17 +31,17 @@ after_build:
 
 artifacts:
   - path: 'Firmware/RPI_M4D.fd'
-    name: MiniUART, 4 GB (DT + ACPI), DEBUG
+    name: mUART, 4GB (ACPI+DT), DEBUG
   - path: 'Firmware/RPI_M3D.fd'
-    name: MiniUART, 3 GB (ACPI only), DEBUG
+    name: mUART, 3GB (ACPI), DEBUG
   - path: 'Firmware/RPI_P4D.fd'
-    name: PL011, 4 GB (DT + ACPI), DEBUG
+    name: PL011, 4GB (ACPI+DT), DEBUG
   - path: 'Firmware/RPI_P3D.fd'
-    name: PL011, 3 GB (ACPI only), DEBUG
+    name: PL011, 3GB (ACPI), DEBUG
   - path: 'Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd'
-    name: PL011, 3 GB (ACPI only), RELEASE
+    name: PL011, 3GB (ACPI), RELEASE
   - path: '*.zip'
-    name: Raspberry Pi 4 UEFI Firmware
+    name: RPi 4 UEFI Firmware
 
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)

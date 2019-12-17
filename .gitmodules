@@ -1,11 +1,11 @@
 [submodule "edk2"]
 	path = edk2
 	url = https://github.com/pftf/edk2.git
-	branch = pi4_dev3
+	branch = master
 [submodule "edk2-platforms"]
 	path = edk2-platforms
 	url = https://github.com/pftf/edk2-platforms.git
-	branch = pi4_dev3
+	branch = pi4_dev4
 [submodule "edk2-non-osi"]
 	path = edk2-non-osi
 	url = https://github.com/pftf/edk2-non-osi.git
