@@ -6,23 +6,29 @@ Raspberry Pi 4 UEFI Firmware Images
 
 # Summary
 
-This repository contains __EARLY EXPERIMENTAL__ builds of the EDK2 Raspberry Pi 4 UEFI firmware.
+This repository contains __EXPERIMENTAL__ installable builds of the official
+[EDK2 Raspberry Pi 4 UEFI firmware](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4).
 
-Please do not expect to boot much of anything at this stage (and especially __not__ Windows), as
-this firmware, which has yet to be integrated to the EDK2, is very much in early development stage.
+Please do not expect the firmware to be fully functional when it comes to supporting your
+ARM64 OS of choice (or even to support your OS at all if you plan to use Windows), as it
+is still very much in development stage.
 
-You may however find that you can boot and install Linux from USB (tested with Debian 10.2 for
-ARM64, with the caveat that you NIC and SD card will be unavailable due to lack of drivers).
+You may however find that you can use the firmware to boot and install Linux from USB
+(tested with Debian 10.2 for ARM64, with the caveat that you NIC and SD card will be
+unavailable due to the current Debian kernel missing up to date drivers).
+
+This firmware is built from the official EDK2 repositories, with no alterations.
 
 # Installation
 
-* Download the latest archive from the [Releases](https://github.com/pbatard/RPI4/releases) repository.
+* Download the latest archive from the [Releases](https://github.com/pftf/RPi4/releases)
+  repository.
 
-* Create an SD card in `MBR` mode with a single partition of type `0x0c` (`FAT32 LBA`) or `0x0e`
-  (`FAT16 LBA`). Then format this partition to `FAT`.
+* Create an SD card in `MBR` mode with a single partition of type `0x0c` (`FAT32 LBA`)
+  or `0x0e` (`FAT16 LBA`). Then format this partition to `FAT`.
 
   __Note:__ Do not try to use `GPT` for the partition scheme or `0xef` (`EFI System
-  Partition`)  for the type, as these are unsupported by the CPU-embedded bootloader.
+  Partition`)  for the type, as these are unsupported by the Raspberry Pi bootloader(s).
 
 * Extract all the files from the archive onto the partition you created above.  
   Note that outside of this `Readme.md`, which you can safely remove, you should not
@@ -43,12 +49,16 @@ card or on a USB drive in `efi/boot/bootaa64.efi`, you can let the UEFI system r
 # Notes
 
 The firmware provided in the zip archive is the `RELEASE` version but you can also find
-`DEBUG` builds of the firmware in the 
+some `DEBUG` builds of the firmware in the 
 [AppVeyor artifacts](https://ci.appveyor.com/project/pbatard/RPi4/build/artifacts).
 
-Note that the RELEASE fimware from the archive uses PL011 for the UART, meaning that
-it uses mini UART for Bluetooth (hence the use of the `minuartbt` overlay). The 
-default baudrate for serial I/O is 115200.
+The RELEASE firmware from the archive uses PL011 for serial (-D PL011_ENABLE=1`), which
+means that it uses mini UART for Bluetooth (hence the `minuartbt` overlay). It also
+enforces ACPI and comes with a 3 GB RAM limitation (`-D ACPI_BASIC_MODE_ENABLE=1) to
+ensure Linux boot.
+
+The default baudrate for serial I/O is 115200 and the console device to use under Linux
+is `/dev/ttyAMA0`.
 
 # License
 
