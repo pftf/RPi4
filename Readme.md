@@ -52,10 +52,10 @@ The firmware provided in the zip archive is the `RELEASE` version but you can al
 some `DEBUG` builds of the firmware in the 
 [AppVeyor artifacts](https://ci.appveyor.com/project/pbatard/RPi4/build/artifacts).
 
-The RELEASE firmware from the archive uses PL011 for serial (-D PL011_ENABLE=1`), which
-means that it uses mini UART for Bluetooth (hence the `minuartbt` overlay). It also
-enforces ACPI and comes with a 3 GB RAM limitation (`-D ACPI_BASIC_MODE_ENABLE=1) to
-ensure Linux boot.
+The RELEASE firmware from the archive uses PL011 for serial (`-D PL011_ENABLE=1`), which
+means that it uses mini UART for Bluetooth (hence the `minuartbt` overlay in `config.txt`).  
+It also enforces ACPI and comes with a 3 GB RAM limitation (`-D ACPI_BASIC_MODE_ENABLE=1`)
+to ensure Linux boot.
 
 The default baudrate for serial I/O is 115200 and the console device to use under Linux
 is `/dev/ttyAMA0`.
