@@ -8,18 +8,8 @@ skip_non_tags: true
 install:
   sh: |-
       sudo apt-get update -qq
-      sudo -E apt-get install -y acpica-tools gcc-aarch64-linux-gnu python3-distutils uuid-dev
+      sudo -E apt-get install -y acpica-tools gcc-aarch64-linux-gnu python3-distutils uuid-dev wget
       git submodule update --init --recursive
-
-before_build:
-  ps: |-
-      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/fixup4.dat
-      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/start4.elf
-      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-4-b.dtb
-      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/overlays/miniuart-bt.dtbo
-      mkdir overlays
-      move miniuart-bt.dtbo overlays
-      mkdir Firmware
 
 build_script:
   sh: ./build_firmware.sh
