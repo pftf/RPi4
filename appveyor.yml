@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Pete Batard <pete@akeo.ie>
+# Copyright (c) 2019-2020, Pete Batard <pete@akeo.ie>
 # SPDX-License-Identifier: BSD-3-Clause
 
 image: Ubuntu1804
@@ -19,7 +19,6 @@ before_build:
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/overlays/miniuart-bt.dtbo
       mkdir overlays
       move miniuart-bt.dtbo overlays
-      mkdir Firmware
 
 build_script:
   sh: ./build_firmware.sh
@@ -30,16 +29,10 @@ after_build:
       sha256sum $APPVEYOR_BUILD_FOLDER/Firmware/*.fd $APPVEYOR_BUILD_FOLDER/Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd RPi4_UEFI_Firmware_$APPVEYOR_REPO_TAG_NAME.zip
 
 artifacts:
-  - path: 'Firmware/RPI_M4D.fd'
-    name: mUART, 4GB (ACPI+DT), DEBUG
-  - path: 'Firmware/RPI_M3D.fd'
-    name: mUART, 3GB (ACPI), DEBUG
-  - path: 'Firmware/RPI_P4D.fd'
-    name: PL011, 4GB (ACPI+DT), DEBUG
-  - path: 'Firmware/RPI_P3D.fd'
-    name: PL011, 3GB (ACPI), DEBUG
+  - path: 'Build/RPi4/DEBUG_GCC5/FV/RPI_EFI.fd'
+    name: DEBUG RPi4 UEFI Firmware
   - path: 'Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd'
-    name: PL011, 3GB (ACPI), RELEASE
+    name: RELEASE RPi4 UEFI Firmware
   - path: '*.zip'
     name: RPi 4 UEFI Firmware
 

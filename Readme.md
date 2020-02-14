@@ -49,16 +49,16 @@ card or on a USB drive in `efi/boot/bootaa64.efi`, you can let the UEFI system r
 # Notes
 
 The firmware provided in the zip archive is the `RELEASE` version but you can also find
-some `DEBUG` builds of the firmware in the 
+a `DEBUG` build of the firmware in the 
 [AppVeyor artifacts](https://ci.appveyor.com/project/pbatard/RPi4/build/artifacts).
 
-The RELEASE firmware from the archive uses PL011 for serial (`-D PL011_ENABLE=1`), which
-means that it uses mini UART for Bluetooth (hence the `minuartbt` overlay in `config.txt`).  
-It also enforces ACPI and comes with a 3 GB RAM limitation (`-D ACPI_BASIC_MODE_ENABLE=1`)
-to ensure Linux boot.
+The provided firmwares should be able to auto-detect the UART being used (PL011 or mini
+UART) according to whether `config.txt` contains the relevant overlay or not. The default
+baudrate for serial I/O is `115200` and the console device to use under Linux is either
+`/dev/ttyAMA0` when using PL011 or `/dev/ttyS0` when using miniUART.
 
-The default baudrate for serial I/O is 115200 and the console device to use under Linux
-is `/dev/ttyAMA0`.
+At the moment, the published firmwares enforce ACPI and come with a 3 GB RAM limitation
+(`-D ACPI_BASIC_MODE_ENABLE=1`) to ensure Linux boot.
 
 # License
 
