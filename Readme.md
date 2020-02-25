@@ -9,15 +9,40 @@ Raspberry Pi 4 UEFI Firmware Images
 This repository contains __EXPERIMENTAL__ installable builds of the official
 [EDK2 Raspberry Pi 4 UEFI firmware](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4).
 
-Please do not expect the firmware to be fully functional when it comes to supporting your
-ARM64 OS of choice (or even to support your OS at all if you plan to use Windows), as it
-is still very much in development stage.
+# Initial Notice
 
-You may however find that you can use the firmware to boot and install Linux from USB
-(tested with Debian 10.2 for ARM64, with the caveat that you NIC and SD card will be
-unavailable due to the current Debian kernel missing up to date drivers).
+__PLEASE READ THE FOLLOWING:__  
+&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B; 
 
-This firmware is built from the official EDK2 repositories, with no alterations.
+* Do __NOT__ expect this firmware to be fully functional when it comes to supporting
+  your ARM64 OS of choice (or even to support your OS at all if you plan to use
+  Windows),  as it is still very much in development stage. 
+
+* You will __NOT__ get SD or network support in Linux because current Linux kernels
+  are missing updated network and SD card drivers for ACPI.
+
+* You will __NOT__ be able to use any of the USB-A ports if you try to run Windows.
+  This means that any attempt to boot Windows from a USB drive plugged at the back
+  of your device will crash.
+
+* The default CPU frequency of the UEFI firmware is __VERY LOW__.  
+  If you have sufficent cooling (e.g. heatsink) you should go to the UEFI firmware
+  settings py pressing <kbd>Esc</kbd> and then go to:
+  - `Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `Chipset Configuration`
+  
+  and change:
+  - `CPU Clock` &rarr; `<Max>`.
+
+* Please understand that you are using an __EXPERIMENTAL__ firmware, which means that
+  not everything is expected to be working and that you may have to wait for a more
+  stable releases (which may be months away) if you want something that "simply works".
+
+* This firmware was built from the
+  [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
+  with no alterations.  
+  If you need more information, please refer to that repository.
+
+&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;
 
 # Installation
 
@@ -46,7 +71,7 @@ to launch the UEFI Shell, or, provided you also have an UEFI bootloader on the S
 card or on a USB drive in `efi/boot/bootaa64.efi`, you can let the UEFI system run that
 (which will be the default if no action is taken).
 
-# Notes
+# Additional Notes
 
 The firmware provided in the zip archive is the `RELEASE` version but you can also find
 a `DEBUG` build of the firmware in the 
