@@ -26,7 +26,7 @@ __PLEASE READ THE FOLLOWING:__
   of your device will crash.
 
 * The default CPU frequency of the UEFI firmware is __VERY LOW__.  
-  If you have sufficent cooling (e.g. heatsink) you should go to the UEFI firmware
+  If you have sufficient cooling (e.g. heatsink) you should go to the UEFI firmware
   settings py pressing <kbd>Esc</kbd> and then go to:
   - `Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `Chipset Configuration`
   
