@@ -28,7 +28,7 @@ __PLEASE READ THE FOLLOWING:__
 * The default CPU frequency of the UEFI firmware is __VERY LOW__.  
   If you have sufficient cooling (e.g. heatsink) you should go to the UEFI firmware
   settings py pressing <kbd>Esc</kbd> and then go to:
-  - `Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `Chipset Configuration`
+  - `Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `CPU Configuration`
   
   and change:
   - `CPU Clock` &rarr; `<Max>`.
@@ -82,8 +82,9 @@ UART) according to whether `config.txt` contains the relevant overlay or not. Th
 baudrate for serial I/O is `115200` and the console device to use under Linux is either
 `/dev/ttyAMA0` when using PL011 or `/dev/ttyS0` when using miniUART.
 
-At the moment, the published firmwares enforce ACPI and come with a 3 GB RAM limitation
-(`-D ACPI_BASIC_MODE_ENABLE=1`) to ensure Linux boot.
+At the moment, the published firmwares default to enforcing ACPI as well as a 3 GB RAM
+limit, which is done to ensure Linux boot. These settings can be changed by going to
+`Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `Advanced Configuration`.
 
 # License
 
