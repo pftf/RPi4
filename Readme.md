@@ -25,14 +25,6 @@ __PLEASE READ THE FOLLOWING:__
   This means that any attempt to boot Windows from a USB drive plugged at the back
   of your device will crash.
 
-* The default CPU frequency of the UEFI firmware is __VERY LOW__.  
-  If you have sufficient cooling (e.g. heatsink) you should go to the UEFI firmware
-  settings py pressing <kbd>Esc</kbd> and then go to:
-  - `Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `CPU Configuration`
-  
-  and change:
-  - `CPU Clock` &rarr; `<Max>`.
-
 * Please understand that you are using an __EXPERIMENTAL__ firmware, which means that
   not everything is expected to be working and that you may have to wait for a more
   stable releases (which may be months away) if you want something that "simply works".
