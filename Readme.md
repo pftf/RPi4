@@ -12,11 +12,11 @@ This repository contains __EXPERIMENTAL__ installable builds of the official
 # Initial Notice
 
 __PLEASE READ THE FOLLOWING:__  
-&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B; 
+&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;
 
 * Do __NOT__ expect this firmware to be fully functional when it comes to supporting
   your ARM64 OS of choice (or even to support your OS at all if you plan to use
-  Windows),  as it is still very much in development stage. 
+  Windows),  as it is still very much in development stage.
 
 * You will __NOT__ get SD or network support in Linux because current Linux kernels
   are missing updated network and SD card drivers for ACPI.
@@ -27,7 +27,7 @@ __PLEASE READ THE FOLLOWING:__
 
 * Please understand that you are using an __EXPERIMENTAL__ firmware, which means that
   not everything is expected to be working and that you may have to wait for a more
-  stable releases (which may be months away) if you want something that "simply works".
+  stable release (which may be months away) if you want something that "simply works".
 
 * This firmware was built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
@@ -59,14 +59,14 @@ data from the SD/USB partition) and then the Raspberry Pi black and white logo o
 UEFI firmware is ready.
 
 At this stage, you can press <kbd>Esc</kbd> to enter the firmware setup, <kbd>F1</kbd>
-to launch the UEFI Shell, or, provided you also have an UEFI bootloader on the SD 
+to launch the UEFI Shell, or, provided you also have an UEFI bootloader on the SD
 card or on a USB drive in `efi/boot/bootaa64.efi`, you can let the UEFI system run that
 (which will be the default if no action is taken).
 
 # Additional Notes
 
 The firmware provided in the zip archive is the `RELEASE` version but you can also find
-a `DEBUG` build of the firmware in the 
+a `DEBUG` build of the firmware in the
 [AppVeyor artifacts](https://ci.appveyor.com/project/pbatard/RPi4/build/artifacts).
 
 The provided firmwares should be able to auto-detect the UART being used (PL011 or mini
