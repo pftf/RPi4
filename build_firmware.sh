@@ -1,4 +1,3 @@
-﻿#
 make -C edk2/BaseTools || exit 1
 export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
 export WORKSPACE=$PWD
