@@ -8,3 +8,4 @@ device_tree_address=0x1f0000
 device_tree_end=0x200000
 device_tree=bcm2711-rpi-4-b.dtb
 dtoverlay=miniuart-bt
+disable_overscan=1
