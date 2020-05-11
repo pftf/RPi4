@@ -1,3 +1,8 @@
+#
+# NOTICE: This script is *NOT* designed to be used in a standalone fashion.
+# It is designed to be used as part of an Appveyor build, and only works if the
+# preliminaries from the appveyor.yml 'install' section have been run first.
+#
 make -C edk2/BaseTools || exit 1
 export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
 export WORKSPACE=$PWD
