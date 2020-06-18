@@ -19,8 +19,11 @@ __PLEASE READ THE FOLLOWING:__
   your ARM64 OS of choice (or even to support your OS at all if you plan to use
   Windows),  as it is still very much in development stage.
 
-* You will __NOT__ get SD or network support in Linux because current Linux kernels
-  are missing updated network and SD card drivers for ACPI.
+* You will __NOT__ get SD support in Linux because current Linux kernels are missing
+  and updated SD card driver with the required ACPI bindings.
+
+* You may __NOT__ get networking support in Linux, unless you use a __very recent__
+  Linux kernel.
 
 * You will __NOT__ be able to use any of the USB-A ports if you try to run Windows.
   This means that any attempt to boot Windows from a USB drive plugged at the back
