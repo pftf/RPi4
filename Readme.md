@@ -16,22 +16,29 @@ __PLEASE READ THE FOLLOWING:__
 &#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;
 
 * Do __NOT__ expect this firmware to be fully functional when it comes to supporting
-  your ARM64 OS of choice (or even to support your OS at all if you plan to use
-  Windows),  as it is still very much in development stage.
+  your ARM64 OS of choice or providing all the features you would expect from a
+  regular UEFI platform. This is __EXPERIMENTAL__ software.
 
 * You will __NOT__ get SD support in Linux because current Linux kernels are missing
   and updated SD card driver with the required ACPI bindings.
 
 * You may __NOT__ get networking support in Linux, unless you use a __very recent__
-  Linux kernel.
+  Linux kernel (version 5.7 or later) or one into which the 5.7 fixes have been
+  backported.
 
-* You will __NOT__ be able to use any of the USB-A ports if you try to run Windows.
-  This means that any attempt to boot Windows from a USB drive plugged at the back
-  of your device will crash.
+* You will __NOT__ get networking in Windows unless you use an external adapter, for
+  which an ARM64 driver already exists. Especially, native Ethernet or Wifi support
+  on Windows will only happen if Broadcom, or a third party, produces a new driver...
 
-* Please understand that you are using an __EXPERIMENTAL__ firmware, which means that
-  not everything is expected to be working and that you may have to wait for a more
-  stable release (which may be months away) if you want something that "simply works".
+* You will __NOT__ be able to use the USB-A ports in Windows, unless you manually
+  patch the `usbxhci.sys` driver. Provided you are installing a recent version of
+  Windows 10 for ARM64 (20H1 or later) this may be accomplished using the command
+  line and Windows utility found [here](https://github.com/pbatard/winpatch).
+
+* Most OSes will be not be able to use more than 3 GB of RAM, even if you have a 4 GB
+  or 8 GB model. This is the result of a hardware bug in the Broadcom CPU that powers
+  the Rapsberry Pi 4. In order to be able to access more than 3 GB of RAM, OSes such
+  as Linux or Windows require a workaround, like the one proposed in issue #20.
 
 * This firmware was built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
@@ -45,15 +52,18 @@ __PLEASE READ THE FOLLOWING:__
 * Download the latest archive from the [Releases](https://github.com/pftf/RPi4/releases)
   repository.
 
-* Create an SD card in `MBR` mode with a single partition of type `0x0c` (`FAT32 LBA`)
-  or `0x0e` (`FAT16 LBA`). Then format this partition to `FAT`.
+* Create an SD card or a USB drive, with at least one partition (it can be a regular
+  partition or an [ESP](https://en.wikipedia.org/wiki/EFI_system_partition)) and format
+  it to FAT16 or FAT32.
 
-  __Note:__ Do not try to use `GPT` for the partition scheme or `0xef` (`EFI System
-  Partition`)  for the type, as these are unsupported by the Raspberry Pi bootloader(s).
+  __Note:__ Booting from USB or from ESP requires a recent-enough version of the Pi
+  EEPROM (as well as a recent version of the UEFI firmware). If you are using the latest
+  UEFI firmware and find that booting from USB or from ESP doesn't work, please visit
+  https://github.com/raspberrypi/rpi-eeprom/releases to update your EEPROM.
 
 * Extract all the files from the archive onto the partition you created above.  
   Note that outside of this `Readme.md`, which you can safely remove, you should not
-  change the name of the extracted files and directories.
+  change the names of the extracted files and directories.
 
 # Usage
 
