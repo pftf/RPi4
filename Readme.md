@@ -40,6 +40,11 @@ __PLEASE READ THE FOLLOWING:__
   the Rapsberry Pi 4. In order to be able to access more than 3 GB of RAM, OSes such
   as Linux or Windows require a workaround, like the one proposed in issue #20.
 
+* Be very mindful that not everything you want can be solved through a UEFI firmware
+  update. Especially, some elements to make an OS fully functional do require an OS
+  update, an OS workaround (such as the one mentioned above) or new OS drivers, which
+  are beyond the scope of this project.
+
 * This firmware was built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
   with no alterations.  
