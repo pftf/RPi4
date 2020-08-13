@@ -47,8 +47,8 @@ __PLEASE READ THE FOLLOWING:__
 
 * This firmware was built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
-  with no alterations.  
-  If you need more information, please refer to that repository.
+  with 0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch applied to the
+  edk2 submodule. If you need more information, please refer to that repository.
 
 &#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;
 

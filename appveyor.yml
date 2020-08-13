@@ -10,6 +10,7 @@ install:
       sudo apt-get update -qq
       sudo -E apt-get install -y acpica-tools gcc-aarch64-linux-gnu python3-distutils uuid-dev
       git submodule update --init --recursive
+      patch --binary -d edk2 -p1 -i ../0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch
 
 before_build:
   ps: |-
