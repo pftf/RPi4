@@ -19,10 +19,10 @@ __PLEASE READ THE FOLLOWING:__
   your ARM64 OS of choice or providing all the features you would expect from a
   regular UEFI platform. This is __EXPERIMENTAL__ software.
 
-* You will __NOT__ get SD support in Linux because current Linux kernels are missing
-  and updated SD card driver with the required ACPI bindings.
+* You will __NOT__ get SD or wireless support in Linux because current Linux kernels
+  are missing updated SD/Wifi drivers with the required ACPI bindings.
 
-* You may __NOT__ get networking support in Linux, unless you use a __very recent__
+* You may __NOT__ get Ethernet networking support in Linux, unless you use a __recent__
   Linux kernel (version 5.7 or later) or one into which the 5.7 fixes have been
   backported.
 
@@ -47,8 +47,11 @@ __PLEASE READ THE FOLLOWING:__
 
 * This firmware was built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
-  with 0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch applied to the
-  edk2 submodule. If you need more information, please refer to that repository.
+  with the following extra patches applied:
+  * `0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch`, so that the
+    Graphical console is set as default.
+  * `0002-Platform-RaspberryPi-Add-MCFG-table.patch` to silence a benign
+    `ACPI: Failed to parse MCFG (-19)` message thrown by Debian during boot.
 
 &#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;
 
