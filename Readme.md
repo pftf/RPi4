@@ -13,7 +13,7 @@ This repository contains __EXPERIMENTAL__ installable builds of the official
 # Initial Notice
 
 __PLEASE READ THE FOLLOWING:__  
-&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;&#x1F53B;
+🔻🔻🔻🔻🔻🔻🔻🔻🔻
 
 * Do __NOT__ expect this firmware to be fully functional when it comes to supporting
   your ARM64 OS of choice or providing all the features you would expect from a
@@ -22,23 +22,19 @@ __PLEASE READ THE FOLLOWING:__
 * You will __NOT__ get SD or wireless support in Linux because current Linux kernels
   are missing updated SD/Wifi drivers with the required ACPI bindings.
 
-* You may __NOT__ get Ethernet networking support in Linux, unless you use a __recent__
+* You will __NOT__ get Ethernet networking support in Linux, unless you use a __recent__
   Linux kernel (version 5.7 or later) or one into which the 5.7 fixes have been
   backported.
 
-* You will __NOT__ get networking in Windows unless you use an external adapter, for
-  which an ARM64 driver already exists. Especially, native Ethernet or Wifi support
-  on Windows will only happen if Broadcom, or a third party, produces a new driver...
+* You may not be able to use more than 3 GB of RAM, even if you have a 4 GB or 8 GB
+  model, unless your OS is patched for DMA access (which, in Linux, requires kernel
+  5.8 or later). This is the result of a hardware bug in the Broadcom CPU that powers
+  the Rapsberry Pi 4.  
+  To use more than 3 GB, and provided your OS has been patched for such use, you need
+  to go to `Device Manager` → `Raspberry Pi Configuration` → `Advanced Settings` in
+  the UEFI settings.
 
-* You will __NOT__ be able to use the USB-A ports in Windows, unless you manually
-  patch the `usbxhci.sys` driver. Provided you are installing a recent version of
-  Windows 10 for ARM64 (20H1 or later) this may be accomplished using the command
-  line and Windows utility found [here](https://github.com/pbatard/winpatch).
-
-* Most OSes will be not be able to use more than 3 GB of RAM, even if you have a 4 GB
-  or 8 GB model. This is the result of a hardware bug in the Broadcom CPU that powers
-  the Rapsberry Pi 4. In order to be able to access more than 3 GB of RAM, OSes such
-  as Linux or Windows require a workaround, like the one proposed in issue #20.
+* You will __NOT__ get wireless networking in Windows...
 
 * Be very mindful that not everything you want can be solved through a UEFI firmware
   update. Especially, some elements to make an OS fully functional do require an OS
@@ -53,7 +49,7 @@ __PLEASE READ THE FOLLOWING:__
   * `0002-Platform-RaspberryPi-Add-MCFG-table.patch` to silence a benign
     `ACPI: Failed to parse MCFG (-19)` message thrown by Debian during boot.
 
-&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;&#x1F53A;
+🔺🔺🔺🔺🔺🔺🔺🔺🔺
 
 # Installation
 
