@@ -43,11 +43,9 @@ __PLEASE READ THE FOLLOWING:__
 
 * This firmware was built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
-  with the following extra patches applied:
+  with the following extra patch applied:
   * `0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch`, so that the
     Graphical console is set as default.
-  * `0002-Platform-RaspberryPi-Add-MCFG-table.patch` to silence a benign
-    `ACPI: Failed to parse MCFG (-19)` message thrown by Debian during boot.
 
 🔺🔺🔺🔺🔺🔺🔺🔺🔺
 
