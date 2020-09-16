@@ -99,7 +99,7 @@ Please visit https://rpi4-uefi.dev/ for more information.
 # License
 
 The firmware (`RPI_EFI.fd`) is licensed under the current EDK2 license, which is
-[BSD-3-Clause](https://github.com/ARM-software/arm-trusted-firmware/blob/master/license.rst).
+[BSD-2-Clause-Patent](https://github.com/tianocore/edk2/blob/master/License.txt).
 
 The other files from the zip archives are licensed under the terms described in the
 [Raspberry Pi boot files README](https://github.com/raspberrypi/firmware/blob/master/README.md).
