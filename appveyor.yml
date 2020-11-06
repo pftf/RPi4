@@ -17,6 +17,8 @@ before_build:
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/fixup4.dat
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/start4.elf
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-4-b.dtb
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-cm4.dtb
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-400.dtb
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/overlays/miniuart-bt.dtbo
       mkdir overlays
       move miniuart-bt.dtbo overlays
@@ -26,7 +28,7 @@ build_script:
 
 after_build:
   sh: |-
-      7z a RPi4_UEFI_Firmware_$APPVEYOR_REPO_TAG_NAME.zip $APPVEYOR_BUILD_FOLDER/Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd $APPVEYOR_BUILD_FOLDER/bcm2711-rpi-4-b.dtb $APPVEYOR_BUILD_FOLDER/config.txt $APPVEYOR_BUILD_FOLDER/fixup4.dat $APPVEYOR_BUILD_FOLDER/start4.elf overlays/miniuart-bt.dtbo $APPVEYOR_BUILD_FOLDER/Readme.md
+      7z a RPi4_UEFI_Firmware_$APPVEYOR_REPO_TAG_NAME.zip $APPVEYOR_BUILD_FOLDER/Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd $APPVEYOR_BUILD_FOLDER/*.dtb $APPVEYOR_BUILD_FOLDER/config.txt $APPVEYOR_BUILD_FOLDER/fixup4.dat $APPVEYOR_BUILD_FOLDER/start4.elf overlays/miniuart-bt.dtbo $APPVEYOR_BUILD_FOLDER/Readme.md
       sha256sum $APPVEYOR_BUILD_FOLDER/Build/RPi4/DEBUG_GCC5/FV/RPI_EFI.fd $APPVEYOR_BUILD_FOLDER/Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd RPi4_UEFI_Firmware_$APPVEYOR_REPO_TAG_NAME.zip
 
 artifacts:
