@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2020, Pete Batard <pete@akeo.ie>
+# Copyright (c) 2019-2021, Pete Batard <pete@akeo.ie>
 # SPDX-License-Identifier: BSD-3-Clause
 
 image: Ubuntu1804
@@ -14,8 +14,8 @@ install:
 
 before_build:
   ps: |-
-      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/fixup4.dat
-      Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/start4.elf
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/08ed7a0c9ad4d9db559aaec462520ab435c7ce1c/boot/fixup4.dat
+      Start-FileDownload https://github.com/raspberrypi/firmware/raw/08ed7a0c9ad4d9db559aaec462520ab435c7ce1c/boot/start4.elf
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-4-b.dtb
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-cm4.dtb
       Start-FileDownload https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-400.dtb
