@@ -19,12 +19,13 @@ __PLEASE READ THE FOLLOWING:__
   your ARM64 OS of choice or providing all the features you would expect from a
   regular UEFI platform. This is __EXPERIMENTAL__ software.
 
-* You will __NOT__ get SD or wireless support in Linux because current Linux kernels
-  are missing updated SD/Wifi drivers with the required ACPI bindings.
-
 * You will __NOT__ get Ethernet networking support in Linux, unless you use a __recent__
   Linux kernel (version 5.7 or later) or one into which the 5.7 fixes have been
   backported.
+
+* You will __NOT__ get SD or wireless support in Linux, unless you use a __recent__
+  Linux kernel (version 5.12 or later) or one into which the 5.12 fixes have been
+  backported as well as a recent Linux wireless firmware package.
 
 * You may not be able to use more than 3 GB of RAM, even if you have a 4 GB or 8 GB
   model, unless your OS is patched for DMA access (which, in Linux, requires kernel
@@ -34,11 +35,11 @@ __PLEASE READ THE FOLLOWING:__
   to go to `Device Manager` → `Raspberry Pi Configuration` → `Advanced Settings` in
   the UEFI settings.
 
-* You will __NOT__ get wireless networking in Windows...
+* There is __NO__ WiFi support in Windows at the moment.
 
 * Be very mindful that not everything you want can be solved through a UEFI firmware
   update. Especially, some elements to make an OS fully functional do require an OS
-  update, an OS workaround (such as the one mentioned above) or new OS drivers, which
+  update, an OS workaround or new OS drivers, such as the ones mentioned above, which
   are beyond the scope of this project.
 
 * This firmware was built from the
