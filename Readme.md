@@ -104,3 +104,6 @@ The firmware (`RPI_EFI.fd`) is licensed under the current EDK2 license, which is
 
 The other files from the zip archives are licensed under the terms described in the
 [Raspberry Pi boot files README](https://github.com/raspberrypi/firmware/blob/master/README.md).
+
+The binary blobs in the `firmware/` directory are licensed under the Cypress wireless driver
+license that is found there.

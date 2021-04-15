@@ -55,7 +55,7 @@ jobs:
         mkdir overlays
         mv miniuart-bt.dtbo overlays
     - name: Create UEFI firmware archive
-      run: zip -r RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip RPI_EFI.fd *.dtb config.txt fixup4.dat start4.elf overlays Readme.md
+      run: zip -r RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip RPI_EFI.fd *.dtb config.txt fixup4.dat start4.elf overlays Readme.md firmware
     - name: Display SHA-256
       run: sha256sum Build/RPi4/DEBUG_GCC5/FV/RPI_EFI.fd Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip
     - name: Create release
