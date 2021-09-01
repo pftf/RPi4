@@ -7,7 +7,7 @@ Raspberry Pi 4 UEFI Firmware Images
 
 # Summary
 
-This repository contains __EXPERIMENTAL__ installable builds of the official
+This repository contains installable builds of the official
 [EDK2 Raspberry Pi 4 UEFI firmware](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4).
 
 # Initial Notice
@@ -15,34 +15,27 @@ This repository contains __EXPERIMENTAL__ installable builds of the official
 __PLEASE READ THE FOLLOWING:__  
 🔻🔻🔻🔻🔻🔻🔻🔻🔻
 
-* Do __NOT__ expect this firmware to be fully functional when it comes to supporting
-  your ARM64 OS of choice or providing all the features you would expect from a
-  regular UEFI platform. This is __EXPERIMENTAL__ software.
+* Ethernet networking support in Linux requires a recent enough kernel (version 5.7 or
+  later)
 
-* You will __NOT__ get Ethernet networking support in Linux, unless you use a __recent__
-  Linux kernel (version 5.7 or later) or one into which the 5.7 fixes have been
-  backported.
+* SD or wireless support in Linux also requires a recent enough kernel (version 5.12 or
+  later).  
+  Still, your mileage may vary as to whether these peripherals will actually be usable.
 
-* You will __NOT__ get SD or wireless support in Linux, unless you use a __recent__
-  Linux kernel (version 5.12 or later) or one into which the 5.12 fixes have been
-  backported as well as a recent Linux wireless firmware package.
+* Many drivers (GPIO, VPU, etc) are still likely to be missing from your OS, and will
+  have to be provided by a third party. Please do not ask for them here, as they fall
+  outside of the scope of this project.
 
-* You may not be able to use more than 3 GB of RAM, even if you have a 4 GB or 8 GB
-  model, unless your OS is patched for DMA access (which, in Linux, requires kernel
-  5.8 or later). This is the result of a hardware bug in the Broadcom CPU that powers
-  the Rapsberry Pi 4.  
-  To use more than 3 GB, and provided your OS has been patched for such use, you need
-  to go to `Device Manager` → `Raspberry Pi Configuration` → `Advanced Settings` in
-  the UEFI settings.
+* A 3 GB RAM limit is enforced __by default__, even if you are using a Raspberry Pi 4
+  model that has 4 GB or 8 GB of RAM, on account that the OS **must** patch DMA access,
+  to work around a hardware bug that is present in the Broadcom SoC.  
+  For Linux this usually translates to using a recent kernel (version 5.8 or later) and
+  for Windows this requires the installation of a filter driver.  
+  If you are running an OS that has been adequately patched,  you can disable the 3 GB
+  limit by going to `Device Manager` → `Raspberry Pi Configuration` → `Advanced Settings`
+  in the UEFI settings.
 
-* There is __NO__ WiFi support in Windows at the moment.
-
-* Be very mindful that not everything you want can be solved through a UEFI firmware
-  update. Especially, some elements to make an OS fully functional do require an OS
-  update, an OS workaround or new OS drivers, such as the ones mentioned above, which
-  are beyond the scope of this project.
-
-* This firmware was built from the
+* This firmware is built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
   with the following extra patch applied:
   * `0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch`, so that the
