@@ -8,24 +8,42 @@ on:
     tags:
       - '*'
 
+env:
+  PROJECT_URL: https://github.com/pftf/RPi4
+  RPI_FIRMWARE_URL: https://github.com/raspberrypi/firmware/
+  ARCH: AARCH64
+  COMPILER: GCC5
+  GCC5_AARCH64_PREFIX: aarch64-linux-gnu-
+  # The following should usually be set to 'master' but, in case
+  # of a regression, a specific SHA-1 can be specified.
+  START_ELF_VERSION: master
+  DTB_VERSION: master
+  DTBO_VERSION: master
+
 jobs:
-  build:
+  UEFI-Build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Set version
       id: set_version
       run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
+
     - name: Set up Linux environment
       run: sudo apt install acpica-tools gcc-aarch64-linux-gnu python3-distutils uuid-dev
+
     - name: Check out EDK2 repositories
       uses: actions/checkout@v2
+
     - name: Check out EDK2 submodules
       run: git submodule update --init --recursive
+
     - name: Patch EDK2 repositories
       run: patch --binary -d edk2 -p1 -i ../0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch
+
     - name: Set up EDK2
       run: make -C edk2/BaseTools
+
     - name: Set up Secure Boot default keys
       run: |
         mkdir keys
@@ -35,56 +53,62 @@ jobs:
         curl -L https://go.microsoft.com/fwlink/?linkid=321192 -o keys/ms_db1.cer
         curl -L https://go.microsoft.com/fwlink/?linkid=321194 -o keys/ms_db2.cer
         curl -L https://uefi.org/sites/default/files/resources/dbxupdate_arm64.bin -o keys/arm64_dbx.bin
+
     - name: Build UEFI firmware
       run: |
         export WORKSPACE=$PWD
         export PACKAGES_PATH=$WORKSPACE/edk2:$WORKSPACE/edk2-platforms:$WORKSPACE/edk2-non-osi
-        export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
         export BUILD_FLAGS="-D SECURE_BOOT_ENABLE=TRUE -D INCLUDE_TFTP_COMMAND=TRUE -D NETWORK_ISCSI_ENABLE=TRUE"
         export DEFAULT_KEYS="-D DEFAULT_KEYS=TRUE -D PK_DEFAULT_FILE=$WORKSPACE/keys/pk.cer -D KEK_DEFAULT_FILE1=$WORKSPACE/keys/ms_kek.cer -D DB_DEFAULT_FILE1=$WORKSPACE/keys/ms_db1.cer -D DB_DEFAULT_FILE2=$WORKSPACE/keys/ms_db2.cer -D DBX_DEFAULT_FILE1=$WORKSPACE/keys/arm64_dbx.bin"
-        source edk2/edksetup.sh
         # EDK2's 'build' command doesn't play nice with spaces in environmnent variables, so we can't move the PCDs there...
-        build -a AARCH64 -t GCC5 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc -b DEBUG --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor=L"https://github.com/pftf/RPi4" --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString=L"UEFI Firmware ${{steps.set_version.outputs.version}}" ${BUILD_FLAGS} ${DEFAULT_KEYS}
-        build -a AARCH64 -t GCC5 -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc -b RELEASE --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor=L"https://github.com/pftf/RPi4" --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString=L"UEFI Firmware ${{steps.set_version.outputs.version}}" ${BUILD_FLAGS} ${DEFAULT_KEYS}
-        cp Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd .
+        source edk2/edksetup.sh
+        for BUILD_TYPE in DEBUG RELEASE; do
+          build -a ${{ env.ARCH }} -t ${{ env.COMPILER }} -b $BUILD_TYPE -p edk2-platforms/Platform/RaspberryPi/RPi4/RPi4.dsc --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor=L"${{ env.PROJECT_URL }}" --pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString=L"UEFI Firmware ${{steps.set_version.outputs.version}}" ${BUILD_FLAGS} ${DEFAULT_KEYS}
+        done
+        cp Build/RPi4/RELEASE_${{ env.COMPILER }}/FV/RPI_EFI.fd .
+
     - name: Upload UEFI firmware artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: RPi4 UEFI Firmware ${{steps.set_version.outputs.version}} Artifacts
+        name: RPi4 UEFI Firmware ${{ steps.set_version.outputs.version }} Artifacts
         path: |
-          Build/RPi4/DEBUG_GCC5/FV/RPI_EFI.fd
-          Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd
+          Build/RPi4/**/FV/RPI_EFI.fd
+
     - name: Download Raspberry Pi support files
       run: |
-        curl -O -L https://github.com/raspberrypi/firmware/raw/master/boot/fixup4.dat
-        curl -O -L https://github.com/raspberrypi/firmware/raw/master/boot/start4.elf
-        curl -O -L https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-4-b.dtb
-        curl -O -L https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-cm4.dtb
-        curl -O -L https://github.com/raspberrypi/firmware/raw/master/boot/bcm2711-rpi-400.dtb
-        curl -O -L https://github.com/raspberrypi/firmware/raw/master/boot/overlays/miniuart-bt.dtbo
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.START_ELF_VERSION }}/boot/fixup4.dat
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.START_ELF_VERSION }}/boot/start4.elf
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTB_VERSION }}/boot/bcm2711-rpi-4-b.dtb
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTB_VERSION }}/boot/bcm2711-rpi-cm4.dtb
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTB_VERSION }}/boot/bcm2711-rpi-400.dtb
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/miniuart-bt.dtbo
         mkdir overlays
         mv miniuart-bt.dtbo overlays
+
     - name: Create UEFI firmware archive
-      run: zip -r RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip RPI_EFI.fd *.dtb config.txt fixup4.dat start4.elf overlays Readme.md firmware
+      run: zip -r RPi4_UEFI_Firmware_${{ steps.set_version.outputs.version }}.zip RPI_EFI.fd *.dtb config.txt fixup4.dat start4.elf overlays Readme.md firmware
+
     - name: Display SHA-256
-      run: sha256sum Build/RPi4/DEBUG_GCC5/FV/RPI_EFI.fd Build/RPi4/RELEASE_GCC5/FV/RPI_EFI.fd RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip
+      run: sha256sum Build/RPi4/*/FV/RPI_EFI.fd RPi4_UEFI_Firmware_${{ steps.set_version.outputs.version }}.zip
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         draft: false
         prerelease: false
-        release_name: ${{steps.set_version.outputs.version}}
-        body: Raspberry Pi 4 UEFI Firmware ${{steps.set_version.outputs.version}}
-        tag_name: ${{steps.set_version.outputs.version}}
+        release_name: ${{ steps.set_version.outputs.version }}
+        body: Raspberry Pi 4 UEFI Firmware ${{ steps.set_version.outputs.version }}
+        tag_name: ${{ steps.set_version.outputs.version }}
+
     - name: Upload release assets
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{steps.create_release.outputs.upload_url}}
-        asset_path: RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip
-        asset_name: RPi4_UEFI_Firmware_${{steps.set_version.outputs.version}}.zip
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: RPi4_UEFI_Firmware_${{ steps.set_version.outputs.version }}.zip
+        asset_name: RPi4_UEFI_Firmware_${{ steps.set_version.outputs.version }}.zip
         asset_content_type: application/zip
