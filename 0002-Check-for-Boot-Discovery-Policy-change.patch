@@ -1,0 +1,58 @@
+Subject: [edk2-platforms PATCH] Platform/RaspberryPi: Check for Boot Discovery Policy change.
+From: Grzegorz Bernacki <gjb@semihalf.com>
+Date: 2021.08.18, 08:38
+To: devel@edk2.groups.io
+CC: leif@nuviainc.com, ardb+tianocore@kernel.org, Samer.El-Haj-Mahmoud@arm.com, sunny.Wang@arm.com, mw@semihalf.com, upstream@semihalf.com, pete@akeo.ie, Grzegorz Bernacki <gjb@semihalf.com>
+
+This patch adds checks if Boot Discovery Policy has been
+changed. Only in that case EfiBootManagerRefreshAllBootOption()
+should be called.
+
+Signed-off-by: Grzegorz Bernacki <gjb@semihalf.com>
+---
+ Platform/RaspberryPi/Library/PlatformBootManagerLib/PlatformBm.c | 24 +++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/Platform/RaspberryPi/Library/PlatformBootManagerLib/PlatformBm.c b/Platform/RaspberryPi/Library/PlatformBootManagerLib/PlatformBm.c
+index c8305ce4f5..378ba0ebf4 100644
+--- a/Platform/RaspberryPi/Library/PlatformBootManagerLib/PlatformBm.c
++++ b/Platform/RaspberryPi/Library/PlatformBootManagerLib/PlatformBm.c
+@@ -617,6 +617,7 @@ BootDiscoveryPolicyHandler (
+ {
+   EFI_STATUS                       Status;
+   UINT32                           DiscoveryPolicy;
++  UINT32                           DiscoveryPolicyOld;
+   UINTN                            Size;
+   EFI_BOOT_MANAGER_POLICY_PROTOCOL *BMPolicy;
+   EFI_GUID                         *Class;
+@@ -678,7 +679,28 @@ BootDiscoveryPolicyHandler (
+     return Status;
+   }
+ 
+-  EfiBootManagerRefreshAllBootOption();
++  //
++  // Refresh Boot Options if Boot Discovery Policy has been changed
++  //
++  Size = sizeof (DiscoveryPolicyOld);
++  Status = gRT->GetVariable (
++                  BOOT_DISCOVERY_POLICY_OLD_VAR,
++                  &gBootDiscoveryPolicyMgrFormsetGuid,
++                  NULL,
++                  &Size,
++                  &DiscoveryPolicyOld
++                  );
++  if ((Status == EFI_NOT_FOUND) || (DiscoveryPolicyOld != DiscoveryPolicy)) {
++    EfiBootManagerRefreshAllBootOption();
++
++    Status = gRT->SetVariable (
++                    BOOT_DISCOVERY_POLICY_OLD_VAR,
++                    &gBootDiscoveryPolicyMgrFormsetGuid,
++                    EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
++                    sizeof (DiscoveryPolicyOld),
++                    &DiscoveryPolicy
++                    );
++  }
+ 
+   return EFI_SUCCESS;
+ }
+-- 2.25.1
