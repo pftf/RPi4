@@ -8,3 +8,4 @@ disable_overscan=1
 device_tree_address=0x1f0000
 device_tree_end=0x200000
 dtoverlay=miniuart-bt
+dtoverlay=upstream-pi4
