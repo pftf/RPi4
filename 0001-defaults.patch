@@ -1,0 +1,22 @@
+diff --git a/Platform/RaspberryPi/RPi4/RPi4.dsc b/Platform/RaspberryPi/RPi4/RPi4.dsc
+index 44ed60ab2f..722a4d3571 100644
+--- a/Platform/RaspberryPi/RPi4/RPi4.dsc
++++ b/Platform/RaspberryPi/RPi4/RPi4.dsc
+@@ -510,7 +510,7 @@
+   # Supporting > 3GB of memory.
+   #
+   gRaspberryPiTokenSpaceGuid.PcdRamMoreThan3GB|L"RamMoreThan3GB"|gConfigDxeFormSetGuid|0x0|0
+-  gRaspberryPiTokenSpaceGuid.PcdRamLimitTo3GB|L"RamLimitTo3GB"|gConfigDxeFormSetGuid|0x0|1
++  gRaspberryPiTokenSpaceGuid.PcdRamLimitTo3GB|L"RamLimitTo3GB"|gConfigDxeFormSetGuid|0x0|0
+ 
+   #
+   # Device Tree and ACPI selection.
+@@ -519,7 +519,7 @@
+   # 1 - SYSTEM_TABLE_MODE_BOTH
+   # 2 - SYSTEM_TABLE_MODE_DT
+   #
+-  gRaspberryPiTokenSpaceGuid.PcdSystemTableMode|L"SystemTableMode"|gConfigDxeFormSetGuid|0x0|0
++  gRaspberryPiTokenSpaceGuid.PcdSystemTableMode|L"SystemTableMode"|gConfigDxeFormSetGuid|0x0|1
+ 
+   #
+   # Enable a fan in the ACPI thermal zone on GPIO pin #

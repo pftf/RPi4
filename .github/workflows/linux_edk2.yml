@@ -9,7 +9,7 @@ on:
       - '*'
 
 env:
-  PROJECT_URL: https://github.com/pftf/RPi4
+  PROJECT_URL: https://github.com/raro28/RPi4
   RPI_FIRMWARE_URL: https://github.com/raspberrypi/firmware/
   ARCH: AARCH64
   COMPILER: GCC5
@@ -39,6 +39,10 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
+
+    - name: Patch EDK2 repositories
+      run: |
+        patch --binary -d edk2-platforms -p1 -i ../0001-defaults.patch
 
     - name: Set up EDK2
       run: make -C edk2/BaseTools
@@ -87,6 +91,9 @@ jobs:
         curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTB_VERSION }}/boot/bcm2711-rpi-400.dtb
         curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/miniuart-bt.dtbo
         curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/upstream-pi4.dtbo
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/disable-bt.dtbo
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/disable-wifi.dtbo
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/rpi-poe-plus.dtbo
         mkdir overlays
         mv *.dtbo overlays
 
