@@ -1,4 +1,5 @@
 arm_64bit=1
+arm_boost=1
 enable_uart=1
 uart_2ndstage=1
 enable_gic=1
