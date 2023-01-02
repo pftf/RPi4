@@ -3,7 +3,7 @@
 
 name: UEFI firmware - EDK2 build
 
-on:  
+on:
   push:
     tags:
       - '*'
@@ -35,10 +35,9 @@ jobs:
         sudo apt-get install acpica-tools gcc-aarch64-linux-gnu
 
     - name: Check out EDK2 repositories
-      uses: actions/checkout@v2
-
-    - name: Check out EDK2 submodules
-      run: git submodule update --init --recursive
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
     - name: Patch EDK2 repositories
       run: |
@@ -72,7 +71,7 @@ jobs:
         cp Build/RPi4/RELEASE_${{ env.COMPILER }}/FV/RPI_EFI.fd .
 
     - name: Upload UEFI firmware artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: RPi4 UEFI Firmware ${{ steps.set_version.outputs.version }} Artifacts
         path: |
