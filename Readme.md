@@ -36,10 +36,7 @@ __PLEASE READ THE FOLLOWING:__
   in the UEFI settings.
 
 * This firmware is built from the
-  [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4),
-  with the following extra patch applied:
-  * `0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch`, so that the
-    Graphical console is set as default.
+  [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4).
 
 🔺🔺🔺🔺🔺🔺🔺🔺🔺
 

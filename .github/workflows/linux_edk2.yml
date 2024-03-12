@@ -39,10 +39,6 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Patch EDK2 repositories
-      run: |
-        patch --binary -d edk2 -p1 -i ../0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch
-
     - name: Set up EDK2
       run: make -C edk2/BaseTools
 
