@@ -42,7 +42,6 @@ jobs:
     - name: Patch EDK2 repositories
       run: |
         patch --binary -d edk2 -p1 -i ../0001-MdeModulePkg-UefiBootManagerLib-Signal-ReadyToBoot-o.patch
-        patch --binary -d edk2-platforms -p1 -i ../0002-Check-for-Boot-Discovery-Policy-change.patch
 
     - name: Set up EDK2
       run: make -C edk2/BaseTools
