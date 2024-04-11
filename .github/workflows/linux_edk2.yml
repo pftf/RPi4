@@ -17,7 +17,8 @@ env:
   # The following should usually be set to 'master' but, in case
   # of a regression, a specific SHA-1 can be specified.
   START_ELF_VERSION: master
-  DTB_VERSION: master
+  # Set to pre HDMI/Audio changes per https://github.com/pftf/RPi4/issues/252
+  DTB_VERSION: b49983637106e5fb33e2ae60d8c15a53187541e4
   DTBO_VERSION: master
 
 jobs:
