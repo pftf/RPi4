@@ -33,7 +33,7 @@ jobs:
     - name: Set up Linux environment
       run: |
         sudo apt-get update
-        sudo apt-get install acpica-tools gcc-aarch64-linux-gnu
+        sudo apt-get install acpica-tools gcc-aarch64-linux-gnu uuid-dev
 
     - name: Check out EDK2 repositories
       uses: actions/checkout@v4
