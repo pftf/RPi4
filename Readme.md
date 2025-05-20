@@ -12,14 +12,14 @@ This repository contains installable builds of the official
 
 # Initial Notice
 
-__PLEASE READ THE FOLLOWING:__  
+__PLEASE READ THE FOLLOWING:__
 🔻🔻🔻🔻🔻🔻🔻🔻🔻
 
 * Ethernet networking support in Linux requires a recent enough kernel (version 5.7 or
   later)
 
 * SD or wireless support in Linux also requires a recent enough kernel (version 5.12 or
-  later).  
+  later).
   Still, your mileage may vary as to whether these peripherals will actually be usable.
 
 * Many drivers (GPIO, VPU, etc) are still likely to be missing from your OS, and will
@@ -28,12 +28,39 @@ __PLEASE READ THE FOLLOWING:__
 
 * A 3 GB RAM limit is enforced __by default__, even if you are using a Raspberry Pi 4
   model that has 4 GB or 8 GB of RAM, on account that the OS **must** patch DMA access,
-  to work around a hardware bug that is present in the Broadcom SoC.  
+  to work around a hardware bug that is present in the Broadcom SoC.
   For Linux this usually translates to using a recent kernel (version 5.8 or later) and
-  for Windows this requires the installation of a filter driver.  
+  for Windows this requires the installation of a filter driver.
   If you are running an OS that has been adequately patched,  you can disable the 3 GB
   limit by going to `Device Manager` → `Raspberry Pi Configuration` → `Advanced Settings`
   in the UEFI settings.
+  or by doing the following:
+  ```bash
+  pip install virt-firmware
+
+  virt-fw-vars \
+    --input RPI_EFI.fd \
+    --output RPI_EFI.fd \
+    --set-json <(cat <<EOF
+  {
+      "version": 2,
+      "variables": [
+          {
+              "name": "RamLimitTo3GB",
+              "guid": "cd7cc258-31db-22e6-9f22-63b0b8eed6b5",
+              "data": "00000000"
+          }
+      ]
+  }
+  EOF
+  )
+  ```
+
+  You also need to apply the `pcie-32bit-dma.dtbo` overlay (https://github.com/raspberrypi/firmware/tree/refs/heads/master/boot/overlays) so that pcie DMA addresses do not overlap system memory.
+
+  ```bash
+    echo "dtoverlay=pcie-32bit-dma" >> config.txt
+  ```
 
 * This firmware is built from the
   [official EDK2 repository](https://github.com/tianocore/edk2-platforms/tree/master/Platform/RaspberryPi/RPi4).
@@ -54,7 +81,7 @@ __PLEASE READ THE FOLLOWING:__
   UEFI firmware and find that booting from USB or from ESP doesn't work, please visit
   https://github.com/raspberrypi/rpi-eeprom/releases to update your EEPROM.
 
-* Extract all the files from the archive onto the partition you created above.  
+* Extract all the files from the archive onto the partition you created above.
   Note that outside of this `Readme.md`, which you can safely remove, you should not
   change the names of the extracted files and directories.
 
