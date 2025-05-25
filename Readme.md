@@ -47,7 +47,9 @@ __PLEASE READ THE FOLLOWING:__
 
 * Create an SD card or a USB drive, with at least one partition (it can be a regular
   partition or an [ESP](https://en.wikipedia.org/wiki/EFI_system_partition)) and format
-  it to FAT16 or FAT32.
+  it to FAT16 or FAT32. When using a Linux-based partitioning tool, choose an MBR style
+  table and select partition type `0xef` (EFI) - other types have been reported
+  to result in boot errors.
 
   __Note:__ Booting from USB or from ESP requires a recent-enough version of the Pi
   EEPROM (as well as a recent version of the UEFI firmware). If you are using the latest
