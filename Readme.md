@@ -85,8 +85,6 @@ At the moment, the published firmwares default to enforcing ACPI as well as a 3 
 limit, which is done to ensure Linux boot. These settings can be changed by going to
 `Device Manager` &rarr; `Raspberry Pi Configuration` &rarr; `Advanced Configuration`.
 
-Please visit https://rpi4-uefi.dev/ for more information.
-
 # License
 
 The firmware (`RPI_EFI.fd`) is licensed under the current EDK2 license, which is
