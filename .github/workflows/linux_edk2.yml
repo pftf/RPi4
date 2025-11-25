@@ -87,6 +87,7 @@ jobs:
         curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTB_VERSION }}/boot/bcm2711-rpi-400.dtb
         curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/miniuart-bt.dtbo
         curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/upstream-pi4.dtbo
+        curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTBO_VERSION }}/boot/overlays/pcie-32bit-dma.dtbo
         mkdir overlays
         mv *.dtbo overlays
 
